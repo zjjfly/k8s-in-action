@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: batch-job-every-fifteen-min
+spec:
+  schedule: "0,15,30,45 * * * *"
+  #job will not start at exact time,it maybe have some delay
+  #if the job is time-sensitive,set the field to a small value
+  startingDeadlineSeconds: 15
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: periodic-batch-job
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: main
+              image: zjjfly/batch-job:1.0

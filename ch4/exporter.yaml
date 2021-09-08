@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-job
+spec:
+  #the retry times before failure,default value is 6
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: batch-job
+    spec:
+      restartPolicy: OnFailure
+      #the seconds to wait for completion,if timeout,the pod will bi tagged "DeadlineExceeded"
+      activeDeadlineSeconds: 25
+      containers:
+        - name: main
+          image: zjjfly/batch-job:1.0

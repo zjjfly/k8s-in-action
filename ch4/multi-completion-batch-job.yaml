@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mutli-completion-batch-job
+spec:
+  completions: 5
+  template:
+    metadata:
+      labels:
+        app: batch-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: main
+          image: zjjfly/batch-job:1.0

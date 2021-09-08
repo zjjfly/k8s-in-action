@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - kubia
+          - foo
+      - key: app
+        operator:  NotIn
+        values:
+          - bar
+      - key: author
+        operator: Exists
+      - key: date
+        operator: DoesNotExist
+  template:
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      containers:
+        - name: kubia
+          image: zjjfly/kubia:1.0
